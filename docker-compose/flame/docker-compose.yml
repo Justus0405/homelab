@@ -1,0 +1,13 @@
+services:
+  flame:
+    image: pawelmalak/flame
+    container_name: flame
+    restart: 'unless-stopped'
+    network_mode: 'bridge'
+    volumes:
+      - /home/justus/docker-compose/flame/data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 5005:5005
+    environment:
+      - PASSWORD=flame_password

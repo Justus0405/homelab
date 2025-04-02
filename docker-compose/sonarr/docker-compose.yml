@@ -1,0 +1,16 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: 'unless-stopped'
+    network_mode: 'bridge'
+    volumes:
+      - /home/justus/docker-compose/sonarr/data:/config
+      - /home/justus/docker-compose/sonarr/downloads:/downloads
+      - /hdd-1-4tb/jellyfin/media/english_series_torrent:/tv
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC

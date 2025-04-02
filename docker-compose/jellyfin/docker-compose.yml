@@ -1,0 +1,45 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    restart: 'unless-stopped'
+    network_mode: 'host'
+    user: "1000:1000"
+    group_add:
+      - "989"
+    volumes:
+      - /home/justus/docker-compose/jellyfin/config:/config
+      - /home/justus/docker-compose/jellyfin/cache:/cache
+      - /hdd-1-4tb/jellyfin/media:/media
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+
+# [Setup Notes]
+# 1. Ensure all volume directories exist before starting the container.
+# 2. For Intel iGPU support, install the "intel-gpu-tools" package.
+# 3. Set the correct group ID for /dev/dri/renderD128:
+#    - Check ownership: ls -l /dev/dri
+#    - Get the group ID (for eg. render): getent group render | cut -d: -f3
+# 4. Verify QuickSync functionality:
+#    docker exec -it jellyfin /usr/lib/jellyfin-ffmpeg/vainfo
+
+# [Fix: No Collection Thumbnails]
+# 1. Install the TMDb Box Sets Plugin (Dashboard → Plugins).
+# 2. Stop Jellyfin: docker stop jellyfin
+# 3. Delete collection folders: rm -rf /config/data/collections
+# 4. Restart Jellyfin: docker-compose up -d
+# 5. Rescan Collections:
+#    - Go to Dashboard → Library → Collections → Trigger Scan.
+# 6. Rebuild Box Sets:
+#    - Dashboard → Scheduled Tasks → Run "Scan library for new box sets".
+
+# [Cool Look]
+# Plugins:
+# 1. Add: https://www.iamparadox.dev/jellyfin/plugins/manifest.json
+# 2. Install "File Transformation"
+# 3. Install "Media Bar"
+# Theme:
+# @import url('https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css');
+# @import url('https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/disable-static-drawer.css');
+#
+# Restart Jellyfin

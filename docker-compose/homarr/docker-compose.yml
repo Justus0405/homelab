@@ -1,0 +1,13 @@
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/homarr-labs/homarr:latest
+    restart: 'unless-stopped'
+    network_mode: 'bridge'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/justus/docker-compose/homarr/appdata:/appdata
+    ports:
+      - '7575:7575'
+    environment:
+      - SECRET_ENCRYPTION_KEY=

@@ -1,0 +1,26 @@
+services:
+  makemkv:
+    image: jlesage/makemkv
+    container_name: makemkv
+    restart: 'unless-stopped'
+    network_mode: 'bridge'
+    ports:
+      - "5800:5800"
+    volumes:
+      - /home/justus/docker-compose/makemkv/appdata/makemkv:/config:rw
+      - /home/justus/docker-compose/makemkv/storage:/storage:ro
+      - /home/justus/docker-compose/makemkv/output:/output:rw
+    devices:
+      - /dev/sr0
+      - /dev/sg0
+      - /dev/sg1
+      - /dev/sg2
+
+# [Fix: No Optical Drive Found]
+# For Arch:
+# 1. Do this to load the driver: "echo "sg" | sudo tee /etc/modules-load.d/sg.conf"
+# 2. Reboot.
+#
+# For Debian:
+# Do: "ls /dev/sg*"
+# Only inculde sr0 and the ones the command printed.

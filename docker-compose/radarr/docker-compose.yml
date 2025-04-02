@@ -1,0 +1,16 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: 'unless-stopped'
+    network_mode: 'bridge'
+    volumes:
+      - /home/justus/docker-compose/radarr/data:/config
+      - /home/justus/docker-compose/radarr/downloads:/downloads
+      - /hdd-1-4tb/jellyfin/media/english_movies_torrent:/movies
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
