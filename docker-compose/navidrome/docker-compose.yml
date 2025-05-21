@@ -1,0 +1,12 @@
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: 'unless-stopped'
+    network_mode: 'bridge'
+    user: '1000:1000'
+    ports:
+      - "4533:4533"
+    volumes:
+      - "/home/justus/docker-compose/navidrome/data:/data"
+      - "/hdd-1-4tb/navidrome/music:/music:ro"
