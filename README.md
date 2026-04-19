@@ -1,4 +1,4 @@
-<img width="2000" height="500" alt="Banner" src="https://github.com/user-attachments/assets/b1ccb746-1c7b-437c-a79d-4b52acb1a79d" />
+<img width="2000" height="500" alt="Banner" src="https://github.com/user-attachments/assets/b1ccb746-1c7b-437c-a79d-4b52acb1a79d" /><br>
 
 <p align="center">
     <!-- Discord Badge -->
