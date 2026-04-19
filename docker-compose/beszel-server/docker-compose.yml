@@ -1,0 +1,9 @@
+services:
+  beszel-server:
+    image: "henrygd/beszel"
+    container_name: "beszel-server"
+    restart: "unless-stopped"
+    ports:
+      - "8090:8090"
+    volumes:
+      - ../../storage/beszel-server/data:/beszel_data

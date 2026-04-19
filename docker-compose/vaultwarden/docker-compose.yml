@@ -1,0 +1,11 @@
+services:
+  vaultwarden:
+    image: "vaultwarden/server:latest"
+    container_name: "vaultwarden"
+    restart: "unless-stopped"
+    ports:
+      - "127.0.0.1:8000:80"
+    volumes:
+      - ../../storage/vaultwarden/data:/data/
+    environment:
+      - ADMIN_TOKEN=${ADMIN_TOKEN}

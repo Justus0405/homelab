@@ -1,0 +1,11 @@
+services:
+  nginx:
+    image: "nginx:alpine"
+    container_name: "nginx-server"
+    restart: "unless-stopped"
+    ports:
+      - 9080:80
+      - 9081:443
+    volumes:
+      - ./data:/usr/share/nginx/html:ro
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro

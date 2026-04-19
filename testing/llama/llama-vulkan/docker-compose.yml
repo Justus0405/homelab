@@ -1,0 +1,46 @@
+services:
+  llama-vulkan:
+    image: "ghcr.io/ggml-org/llama.cpp:server-vulkan"
+    container_name: "llama-vulkan"
+    restart: "unless-stopped"
+    # Hardware limits to 8 cores and 8gb of ram
+    # cpus: "8"
+    # mem_limit: "8g"
+
+    # Expose API port from the llama.cpp server
+    ports:
+      - "8080:8080"
+
+    # Host dependencies (Arch Linux):
+    # intel-compute-runtime level-zero-headers level-zero-loader ocl-icd clinfo vulkan-intel vulkan-devel
+    # Verify using: clinfo | grep "Intel"
+    # getent group video | cut -d: -f3
+    # getent group render | cut -d: -f3
+    group_add:
+      - "985"
+      - "989"
+    devices:
+      - /dev/dri:/dev/dri
+
+    volumes:
+      # Models directory
+      - ../data:/models:ro
+
+    command:
+      [
+        "--model",
+        "${MODEL}",
+        "--api-key",
+        "dummy",
+        "--port",
+        "8080",
+        "--host",
+        "0.0.0.0",
+        "--ctx-size",
+        "4096",
+        "--n-gpu-layers",
+        "-1",
+      ]
+
+    # Recommended for Vulkan/Mesa
+    privileged: true

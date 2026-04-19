@@ -1,0 +1,24 @@
+services:
+  duplicati:
+    image: "lscr.io/linuxserver/duplicati:development"
+    container_name: "duplicati"
+    restart: "unless-stopped"
+    # NOTE:
+    # Exclude folders where name contains "cache"
+    # Exclude folders where name contains "makemkv"
+    ports:
+      - "8200:8200"
+    volumes:
+      - ../../storage/duplicati/config:/config
+      - ../../storage/duplicati/data:/backups
+      - ../../storage:/source
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      # Encryption key for settings database. Minimum 8 characters, alphanumeric.
+      - SETTINGS_ENCRYPTION_KEY="${SETTINGS_ENCRYPTION_KEY}"
+      # Optionally specify any CLI variables you want to launch the app with
+      # - CLI_ARGS=
+      # Optional Password for the webui. If left unset will default to changeme and can be changed from the webui settings.
+      # - DUPLICATI__WEBSERVICE_PASSWORD="${DUPLICATI__WEBSERVICE_PASSWORD}"

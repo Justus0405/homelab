@@ -1,0 +1,24 @@
+services:
+  watchtower:
+    # SOURCE: https://watchtower.nickfedor.com
+    image: "nickfedor/watchtower"
+    container_name: "watchtower"
+    restart: "unless-stopped"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --schedule "0 0 4 * * *" --cleanup
+    environment:
+      TZ: Europe/Berlin
+      # SOURCE: https://watchtower.nickfedor.com/notifications/templates/#example_usage
+      WATCHTOWER_NOTIFICATION_URL: ${WEBHOOK}
+      WATCHTOWER_NOTIFICATION_REPORT: "true"
+      WATCHTOWER_NOTIFICATION_TEMPLATE: |
+        {{- if .Report -}}
+          {{- with .Report -}}
+            {{- range .Updated}}
+        - {{.Name}} was updated
+            {{- end -}}
+          {{- end -}}
+        {{- else -}}
+          {{range .Entries -}}{{.Message}}{{"\n"}}{{- end -}}
+        {{- end -}}

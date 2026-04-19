@@ -1,0 +1,11 @@
+services:
+  nginx-proxy-manager:
+    image: "jc21/nginx-proxy-manager:latest"
+    container_name: "nginx-proxy-manager"
+    restart: "unless-stopped"
+    # NOTE:
+    # This container outputs something at port 3000 for some reason...
+    network_mode: "host"
+    volumes:
+      - ../../storage/nginx-proxy-manager/data:/data
+      - ../../storage/nginx-proxy-manager/letsencrypt:/etc/letsencrypt

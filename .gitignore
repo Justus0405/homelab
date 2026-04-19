@@ -1,0 +1,16 @@
+# Secrets, Tokens, etc.
+.env
+./secrets/
+letsencrypt/
+
+# Generic Docker App Data
+cache/
+config/
+data/
+other/
+
+# MakeMKV Output
+output/
+
+# Torrent Docker App Data
+downloads/

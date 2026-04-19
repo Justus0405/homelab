@@ -1,0 +1,142 @@
+services:
+  gluetun:
+    image: "qmcgaw/gluetun:latest"
+    container_name: "gluetun"
+    restart: "unless-stopped"
+    ports:
+      # NOTE:
+      # When a container uses network_mode: "service:...", it shares the network stack of that other container, so you cannot publish ports on it again.
+      # When Transmission shares Gluetun’s network stack, only Gluetun can expose ports to the host, not Transmission itself.
+      # You simply need to move all the ports: lines from the transmission service to the gluetun service.
+      # Web UI for Transmission
+      - "9091:9091"
+      # Web UI for Prowlarr
+      - "9696:9696"
+      # Transmission Torrent ports
+      - "51413:51413"
+      - "51413:51413/udp"
+      # Flaresolverr
+      - "8191:8191"
+      # Radarr
+      - "7878:7878"
+      # Sonarr
+      - "8989:8989"
+      # Profilarr
+      - "6868:6868"
+      # Optional: Gluetun built-in web/proxy ports
+      - "8888:8888/tcp"
+      - "8388:8388/tcp"
+      - "8388:8388/udp"
+    volumes:
+      - ../../storage/torrent-stack/gluetun/data:/gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=protonvpn
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${ADDRESSES}
+      - SERVER_COUNTRIES=Switzerland
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.178.0/24
+      - TZ=Europe/Berlin
+
+  transmission:
+    image: "lscr.io/linuxserver/transmission:latest"
+    # Note:
+    # https://raw.githubusercontent.com/Naunter/BT_BlockLists/master/bt_blocklists.gz
+    #
+    # Check if the VPN is working:
+    # docker exec -it transmission curl ifconfig.me
+    container_name: "transmission"
+    restart: "unless-stopped"
+    network_mode: "service:gluetun"
+    # NOTE:
+    # Transmission doesnt know your real LAN or WAN IP.
+    # If Gluetuns VPN connection drops, Transmission loses all network connectivity automatically.
+    # No packets can bypass the VPN because all interfaces (except the VPN tunnel) are firewalled by Gluetun.
+    volumes:
+      - ../../storage/torrent-stack/transmission/config:/config
+      - ../../storage/torrent-stack/transmission/downloads:/downloads
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - USER=${USER}
+      - PASS=${PASS}
+
+  prowlarr:
+    image: "lscr.io/linuxserver/prowlarr:latest"
+    container_name: "prowlarr"
+    restart: "unless-stopped"
+    network_mode: "service:gluetun"
+    volumes:
+      - ../../storage/torrent-stack/prowlarr/config:/config
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+
+  flaresolverr:
+    image: "ghcr.io/flaresolverr/flaresolverr:latest"
+    container_name: "flaresolverr"
+    restart: "unless-stopped"
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    environment:
+      - LOG_LEVEL=info
+
+  radarr:
+    image: "lscr.io/linuxserver/radarr:latest"
+    container_name: "radarr"
+    restart: "unless-stopped"
+    network_mode: "service:gluetun"
+    volumes:
+      - ../../storage/torrent-stack/radarr/config:/config
+      - ../../storage/torrent-stack/transmission/downloads:/downloads
+      - /hdd-1-4tb/jellyfin/media/movies_english:/movies
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+
+  sonarr:
+    image: "lscr.io/linuxserver/sonarr:latest"
+    container_name: "sonarr"
+    restart: "unless-stopped"
+    network_mode: "service:gluetun"
+    volumes:
+      - ../../storage/torrent-stack/sonarr/config:/config
+      - ../../storage/torrent-stack/transmission/downloads:/downloads
+      - /hdd-1-4tb/jellyfin/media/shows_english:/tv
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+
+  profilarr:
+    image: "santiagosayshey/profilarr:latest"
+    # NOTE:
+    # Media Management: add root path
+    # Add Download Client
+    # Add Apps in prowlarr
+    # Add profilarr uplink: https://github.com/Dictionarry-Hub/database
+    container_name: "profilarr"
+    restart: "unless-stopped"
+    network_mode: "service:gluetun"
+    volumes:
+      - ../../storage/torrent-stack/profilarr/config:/config
+    depends_on:
+      - gluetun
+    environment:
+      - TZ=Europe/Berlin

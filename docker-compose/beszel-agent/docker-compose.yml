@@ -1,0 +1,35 @@
+services:
+  beszel-agent:
+    image: "henrygd/beszel-agent-intel"
+    container_name: "beszel-agent"
+    restart: "unless-stopped"
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ../../storage/beszel-agent/data:/var/lib/beszel-agent
+      # Filesystem Monitoring
+      - /hdd-1-4tb/.beszel:/extra-filesystems/sda:ro
+      - /ssd-1-1tb/.beszel:/extra-filesystems/sdb:ro
+      # S.M.A.R.T Monitoring
+      - /dev/nvme0n1:/dev/nvme0n1
+      - /dev/sda:/dev/sda
+      - /dev/sdb:/dev/sdb
+    group_add:
+      - "985"
+      - "989"
+    devices:
+      - /dev/dri:/dev/dri
+    cap_add:
+      # Intel GPU Monitoring
+      - CAP_PERFMON
+      # Sata S.M.A.R.T. Data
+      - SYS_RAWIO
+      # NVMe S.M.A.R.T. Data
+      - SYS_ADMIN
+    environment:
+      SMART_INTERVAL: "168h"
+      LISTEN: "${LISTEN}"
+      KEY: "${KEY}"
+      TOKEN: "${TOKEN}"
+      HUB_URL: "${HUB_URL}"

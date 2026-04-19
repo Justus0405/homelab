@@ -1,0 +1,11 @@
+services:
+  flame:
+    image: "gotify/server"
+    container_name: "gotify"
+    restart: "unless-stopped"
+    ports:
+      - "127.0.0.1:4002:80"
+    volumes:
+      - ../../storage/gotify/data:/app/data
+    environment:
+      - TZ=Europe/Berlin

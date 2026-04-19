@@ -1,0 +1,11 @@
+services:
+  flame:
+    image: "pawelmalak/flame"
+    container_name: "flame"
+    restart: "unless-stopped"
+    ports:
+      - "5005:5005"
+    volumes:
+      - ../../storage/flame/data:/app/data
+    environment:
+      - PASSWORD=${PASSWORD}

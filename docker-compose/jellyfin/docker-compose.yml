@@ -1,0 +1,18 @@
+services:
+  jellyfin:
+    image: "jellyfin/jellyfin"
+    container_name: "jellyfin"
+    restart: "unless-stopped"
+    network_mode: "host"
+    user: "1000:1000"
+    volumes:
+      - ../../storage/jellyfin/config:/config
+      - ../../storage/jellyfin/cache:/cache
+      - /hdd-1-4tb/jellyfin/media:/media # Add your media library here
+    # getent group video | cut -d: -f3
+    # getent group render | cut -d: -f3
+    group_add:
+      - "985"
+      - "989"
+    devices:
+      - /dev/dri:/dev/dri

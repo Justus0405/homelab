@@ -1,0 +1,20 @@
+services:
+  makemkv:
+    image: "jlesage/makemkv"
+    container_name: "makemkv"
+    restart: "unless-stopped"
+    ports:
+      - "5800:5800"
+    volumes:
+      - ../../storage/makemkv/config:/config:rw
+      - ../../storage/makemkv/data:/storage:ro
+      - ../../storage/makemkv/output:/output:rw
+    devices:
+      - /dev/sr0
+      - /dev/sg0
+      - /dev/sg1
+      - /dev/sg2
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+      - TZ=Europe/Berlin

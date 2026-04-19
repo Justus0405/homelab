@@ -1,0 +1,30 @@
+services:
+  llama-cpu:
+    image: "ghcr.io/ggml-org/llama.cpp:server"
+    container_name: "llama-cpu"
+    restart: "unless-stopped"
+    # Hardware limits to 8 cores and 8gb of ram
+    # cpus: "8"
+    # mem_limit: "8g"
+
+    # Expose API port from the llama.cpp server
+    ports:
+      - "8080:8080"
+
+    volumes:
+      # Models directory
+      - ../data:/models:ro
+
+    command:
+      [
+        "--model",
+        "${MODEL}",
+        "--api-key",
+        "dummy",
+        "--port",
+        "8080",
+        "--host",
+        "0.0.0.0",
+        "--ctx-size",
+        "4096",
+      ]
