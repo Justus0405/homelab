@@ -8,3 +8,9 @@ services:
     volumes:
       - ../../storage/uptime-kuma/data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock
+  nginx-status-page:
+    image: "nginx:alpine"
+    container_name: "nginx-status-page"
+    restart: "unless-stopped"
+    ports:
+      - "3002:80"
