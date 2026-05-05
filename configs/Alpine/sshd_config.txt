@@ -14,7 +14,7 @@
 # snippets to override directives set in this file.
 Include /etc/ssh/sshd_config.d/*.conf
 
-#Port 22
+Port 22
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -28,17 +28,17 @@ Include /etc/ssh/sshd_config.d/*.conf
 
 # Logging
 #SyslogFacility AUTH
-#LogLevel INFO
+LogLevel VERBOSE
 
 # Authentication:
 
-#LoginGraceTime 2m
-#PermitRootLogin prohibit-password
+LoginGraceTime 20
+PermitRootLogin no
 #StrictModes yes
-#MaxAuthTries 6
-#MaxSessions 10
+MaxAuthTries 3
+MaxSessions 2
 
-#PubkeyAuthentication yes
+PubkeyAuthentication yes
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
@@ -58,13 +58,13 @@ AuthorizedKeysFile	.ssh/authorized_keys
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to "no" here!
-#PasswordAuthentication yes
-#PermitEmptyPasswords no
+PasswordAuthentication no
+PermitEmptyPasswords no
 
 # Change to "no" to disable keyboard-interactive authentication.  Depending on
 # the system's configuration, this may involve passwords, challenge-response,
 # one-time passwords or some combination of these and other methods.
-#KbdInteractiveAuthentication yes
+KbdInteractiveAuthentication no
 
 # Kerberos options
 #KerberosAuthentication no
@@ -100,11 +100,11 @@ X11Forwarding no
 #TCPKeepAlive yes
 #PermitUserEnvironment no
 #Compression delayed
-#ClientAliveInterval 0
-#ClientAliveCountMax 3
+ClientAliveInterval 300
+ClientAliveCountMax 2
 #UseDNS no
 #PidFile /run/sshd.pid
-#MaxStartups 10:30:100
+MaxStartups 3:50:10
 #PermitTunnel no
 #ChrootDirectory none
 #VersionAddendum none
@@ -114,6 +114,10 @@ X11Forwarding no
 
 # override default of no subsystems
 Subsystem	sftp	internal-sftp
+
+# CUSTOM
+AuthenticationMethods publickey
+AllowUsers justus
 
 # Example of overriding settings on a per-user basis
 #Match User anoncvs
