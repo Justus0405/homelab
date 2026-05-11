@@ -72,6 +72,7 @@ Each directory contains a `docker-compose.yml` (and any related notes & .env) fo
 | [jotty](https://github.com/fccview/jotty)                                       | Lightweight note-taking app                       |
 | [makemkv](https://github.com/jlesage/docker-makemkv)                            | Containerized disc ripping tool                   |
 | [nginx-proxy-manager](https://github.com/NginxProxyManager/nginx-proxy-manager) | Reverse proxy with SSL and a web UI               |
+| [open-webui](https://github.com/open-webui/open-webui)                          | Self-hosted AI Chat                               |
 | [torrent-stack](https://github.com/qdm12/gluetun)                               | Torrent client and related services               |
 | [uptime-kuma](https://github.com/louislam/uptime-kuma)                          | Uptime monitoring and status pages                |
 | [vaultwarden](https://github.com/dani-garcia/vaultwarden)                       | Lightweight Bitwarden-compatible password manager |
