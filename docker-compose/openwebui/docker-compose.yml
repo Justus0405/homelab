@@ -7,3 +7,14 @@ services:
       - "127.0.0.1:3080:8080"
     volumes:
       - ../../storage/openwebui/data:/app/backend/data
+    depends_on:
+      - playwright
+
+  playwright:
+    image: "mcr.microsoft.com/playwright:v1.58.2-noble"
+    container_name: "playwright"
+    restart: "unless-stopped"
+    command: >
+      sh -c "npx -y playwright@1.58.2 run-server --port 3000 --host 0.0.0.0"
+    ports:
+      - "3082:3000"

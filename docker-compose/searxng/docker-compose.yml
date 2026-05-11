@@ -1,0 +1,19 @@
+services:
+  core:
+    image: "docker.io/searxng/searxng:latest"
+    container_name: "searxng-core"
+    restart: "unless-stopped"
+    ports:
+      - "3081:8080"
+    env_file: ./.env
+    volumes:
+      - ../../storage/searxng/config/:/etc/searxng/:Z
+      - ../../storage/searxng/data:/var/cache/searxng/
+
+  valkey:
+    image: "docker.io/valkey/valkey:9-alpine"
+    container_name: "searxng-valkey"
+    restart: "unless-stopped"
+    command: valkey-server --save 30 1 --loglevel warning
+    volumes:
+      - ../../storage/searxng/cache:/data/
