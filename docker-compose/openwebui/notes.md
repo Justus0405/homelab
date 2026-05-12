@@ -39,9 +39,10 @@ formats:
 - Playwright Timeout (ms): 30000
 - Concurrent Requests: 10
 
-### Step 3: Enable native Agentic tool calling
+### Step 3: Enable Web Search & native Agentic tool calling by Default
 
-- Admin Panel → Settings → Models → Advanced Parameters → set Function Calling to Native
+- Admin Panel → Settings → Models → Settings (top left) → Model Capabilities → Enable Web Search
+- Admin Panel → Settings → Models → Settings (top left) → Model Parameters → Function Calling from Default → Native
 
 ## Fix: Playwright version mismatch
 
