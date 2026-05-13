@@ -18,17 +18,19 @@ formats:
 
 ## Step 2: Add the values
 
+- Admin Panel → Settings → Web Search
+
 ### General
 
 - Web Search: true
 - Web Search Engine: searxng
 - Searxng Query URL: http://192.168.178.100:3081/search?q=<query>
 - Searxng search language (all, en, es, de, fr, etc.): all
-- Search Result Count: 5
+- Search Result Count: 10
 - Concurrent Requests: 0
-- Fetch URL Content Length Limit: none
+- Fetch URL Content Length Limit: 16000
 - Domain Filter List: none
-- Bypass Embedding and Retrieval: false
+- Bypass Embedding and Retrieval: false (Set to true for quality increase but increases token amount too)
 - Bypass Web Loader: false
 - Trust Proxy Environment: true
 
@@ -43,6 +45,13 @@ formats:
 
 - Admin Panel → Settings → Models → Settings (top left) → Model Capabilities → Enable Web Search
 - Admin Panel → Settings → Models → Settings (top left) → Model Parameters → Function Calling from Default → Native
+
+### Step 4: Upgrade Embeddings Model (OPTIONAL) (NOT GENERALLY RECOMMENDED)
+
+- Admin Panel → Settings → Documents → Embedding
+
+- Embedding Model Engine: OpenAI → https://openrouter.ai/api/v1
+- Embedding Model: openai/text-embedding-3-large
 
 ## Fix: Playwright version mismatch
 
