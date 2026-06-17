@@ -98,12 +98,13 @@ Utility and setup scripts for common tasks across Arch and other hosts.
 
 Experimental or in-progress stacks not yet promoted to production.
 
-| Stack         | Description                    |
-| ------------- | ------------------------------ |
-| llama         | LLM inference via llama.cpp    |
-| nginx         | Nginx web server testing       |
-| ollama        | LLM inference via Ollama       |
-| openspeedtest | Self-hosted network speed test |
+| Stack                                                          | Description                          |
+| -------------------------------------------------------------- | ------------------------------------ |
+| [llama](https://github.com/ggml-org/llama.cpp)                 | LLM inference via llama.cpp          |
+| [nginx](https://github.com/nginx/docker-nginx)                 | Nginx web server testing             |
+| [ollama](https://github.com/ollama/ollama)                     | LLM inference via Ollama             |
+| [openspeedtest](https://github.com/openspeedtest/Docker-Image) | Self-hosted network speed test       |
+| [degoog](https://github.com/degoog-org/degoog)                 | Self-hosted Search Engine by fccview |
 
 #
 

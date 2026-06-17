@@ -1,0 +1,51 @@
+services:
+  degoog:
+    image: "ghcr.io/degoog-org/degoog:latest"
+    container_name: "degoog"
+    restart: "unless-stopped"
+    volumes:
+      - ./config:/app/data
+    ports:
+      - "4444:4444"
+    environment:
+      DEGOOG_VALKEY_URL: "redis://degoog-valkey:6379"
+      DEGOOG_POSTGRES: "postgresql://degoog:${POSTGRES_PASSWORD}@degoog-postgres:5432/degoog"
+    depends_on:
+      degoog-valkey:
+        condition: service_started
+      degoog-postgres:
+        condition: service_healthy
+
+  degoog-valkey:
+    image: "valkey/valkey:8-alpine"
+    container_name: "degoog-valkey"
+    restart: "unless-stopped"
+    user: "1000:1000"
+    command: ["valkey-server", "--save", "", "--appendonly", "no"]
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+  degoog-postgres:
+    image: "postgres:17-alpine"
+    container_name: "degoog-postgres"
+    restart: "unless-stopped"
+    user: "70:70"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: degoog
+      POSTGRES_USER: degoog
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U degoog -d degoog"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
