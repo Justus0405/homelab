@@ -11,10 +11,10 @@ services:
       - playwright
 
   playwright:
-    image: "mcr.microsoft.com/playwright:v1.58.2-noble"
+    image: "mcr.microsoft.com/playwright:v1.60.0-noble"
     container_name: "playwright"
     restart: "unless-stopped"
     command: >
-      sh -c "npx -y playwright@1.58.2 run-server --port 3000 --host 0.0.0.0"
+      sh -c "npx -y playwright@v1.60.0 run-server --port 3000 --host 0.0.0.0"
     ports:
       - "3082:3000"
