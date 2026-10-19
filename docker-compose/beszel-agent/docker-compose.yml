@@ -4,6 +4,8 @@ services:
     container_name: "beszel-agent"
     restart: "unless-stopped"
     network_mode: "host"
+    # Required for nvtop to report GPU utilization inside the container.
+    pid: "host"
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -29,6 +31,7 @@ services:
       - SYS_ADMIN
     environment:
       SMART_INTERVAL: "168h"
+      GPU_COLLECTOR: "nvtop"
       LISTEN: "${LISTEN}"
       KEY: "${KEY}"
       TOKEN: "${TOKEN}"
