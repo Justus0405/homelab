@@ -62,6 +62,7 @@ Each directory contains a `docker-compose.yml` (and any related notes & .env) fo
 
 | Stack                                                                           | Description                                       |
 | ------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [audiobookshelf](https://github.com/advplyr/audiobookshelf)                     | Self-hosted audiobook media server                |
 | [beszel-agent](https://github.com/henrygd/beszel)                               | Lightweight server monitoring agent               |
 | [beszel-server](https://github.com/henrygd/beszel)                              | Monitoring dashboard server                       |
 | [duplicati](https://github.com/duplicati/duplicati)                             | Encrypted backup solution                         |

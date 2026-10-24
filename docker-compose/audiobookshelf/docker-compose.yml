@@ -1,0 +1,14 @@
+services:
+  audiobookshelf:
+    image: "ghcr.io/advplyr/audiobookshelf:latest"
+    container_name: "audiobookshelf"
+    restart: "unless-stopped"
+    user: "1000:1000"
+    ports:
+      - "127.0.0.1:13378:80"
+    volumes:
+      - ../../storage/audiobookshelf/config:/config
+      - ../../storage/audiobookshelf/cache:/metadata
+      - /hdd-1-4tb/audiobookshelf/audiobooks:/audiobooks
+    environment:
+      - TZ=Europe/Berlin
