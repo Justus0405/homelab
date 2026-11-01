@@ -77,6 +77,7 @@ Each directory contains a `docker-compose.yml` (and any related notes & .env) fo
 | [searxng](https://github.com/searxng/searxng)                                   | Self-hosted Search Engine                         |
 | [torrent-stack](https://github.com/qdm12/gluetun)                               | Torrent client and related services               |
 | [uptime-kuma](https://github.com/louislam/uptime-kuma)                          | Uptime monitoring and status pages                |
+| [whoami](https://github.com/traefik/whoami)                                     | Server that prints os and HTTP information        |
 | [vaultwarden](https://github.com/dani-garcia/vaultwarden)                       | Lightweight Bitwarden-compatible password manager |
 | [watchtower](https://github.com/nicholas-fedor/watchtower)                      | Automatic Docker container updates                |
 
