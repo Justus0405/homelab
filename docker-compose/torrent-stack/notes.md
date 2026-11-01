@@ -31,20 +31,24 @@ mkdir -p /hdd-1-4tb/downloads/{torrents/{incomplete,movies,tv},usenet/{incomplet
 │       └── tv/
 └── jellyfin/
     └── media/
+        ├── anime_movies_german
+        ├── anime_shows_german
         ├── movies_german/
         └── shows_german/
 ```
 
 ## Mount Map
 
-| Host path                                 | Container path | Used by                               |
-| ----------------------------------------- | -------------- | ------------------------------------- |
-| `/hdd-1-4tb/downloads`                    | `/downloads`   | Transmission, SABnzbd, Radarr, Sonarr |
-| `/hdd-1-4tb/jellyfin/media/movies_german` | `/movies`      | Radarr                                |
-| `/hdd-1-4tb/jellyfin/media/shows_german`  | `/tv`          | Sonarr                                |
-| `/hdd-1-4tb/jellyfin/media`               | `/media`       | Jellyfin                              |
+| Host path                                       | Container path | Used by                               |
+| ----------------------------------------------- | -------------- | ------------------------------------- |
+| `/hdd-1-4tb/downloads`                          | `/downloads`   | Transmission, SABnzbd, Radarr, Sonarr |
+| `/hdd-1-4tb/jellyfin/media/movies_german`       | `/movies`      | Radarr                                |
+| `/hdd-1-4tb/jellyfin/media/anime_movies_german` | `/animes`      | Radarr                                |
+| `/hdd-1-4tb/jellyfin/media/shows_german`        | `/tv`          | Sonarr                                |
+| `/hdd-1-4tb/jellyfin/media/anime_shows_german`  | `/anime`       | Sonarr                                |
+| `/hdd-1-4tb/jellyfin/media`                     | `/media`       | Jellyfin                              |
 
-Jellyfin reads the library at `/media/movies_german` and `/media/shows_german`, the \*arrs write to the same folders as `/movies` and `/tv`.
+Jellyfin reads the library at `/media/movies_german`, `/media/anime_movies_german`, `/media/shows_german` and `/media/anime_shows_german`, the \*arrs write to the same folders as `/movies` and `/tv`.
 
 ## Ports
 
@@ -67,11 +71,13 @@ All published on Gluetun. Moving a port to an app container breaks it while it s
 2. SABnzbd -> Settings -> Folders -> temp `/downloads/usenet/incomplete`, complete `/downloads/usenet`.
 3. SABnzbd -> Settings -> Categories -> add `movies` (`*/movies`), `tv` (`*/tv`).
 4. Radarr -> Settings -> Media Management -> add root folder `/movies`, enable rename.
-5. Sonarr -> Settings -> Media Management -> add root folder `/tv`, enable rename episodes.
-6. Add download clients (see table below) in Radarr and Sonarr.
-7. Prowlarr -> Settings -> Apps -> add Radarr `http://localhost:7878` and Sonarr `http://localhost:8989` with their API keys. Indexers only get added in Prowlarr, never directly in Radarr or Sonarr.
-8. Prowlarr -> Settings -> Indexer Proxies -> add FlareSolverr, host `http://localhost:8191`, tag `flaresolverr`. Apply that tag to Cloudflare-protected indexers only.
-9. Profilarr -> `http://<host>:6868` -> add root paths, download clients and the apps, then add the uplink `https://github.com/Dictionarry-Hub/trash-pcd/tree/german`.
+5. Radarr -> Settings -> Media Management -> add root folder `/animes`, enable rename.
+6. Sonarr -> Settings -> Media Management -> add root folder `/tv`, enable rename episodes.
+7. Sonarr -> Settings -> Media Management -> add root folder `/anime`, enable rename episodes.
+8. Add download clients (see table below) in Radarr and Sonarr.
+9. Prowlarr -> Settings -> Apps -> add Radarr `http://localhost:7878` and Sonarr `http://localhost:8989` with their API keys. Indexers only get added in Prowlarr, never directly in Radarr or Sonarr.
+10. Prowlarr -> Settings -> Indexer Proxies -> add FlareSolverr, host `http://localhost:8191`, tag `flaresolverr`. Apply that tag to Cloudflare-protected indexers only.
+11. Profilarr -> `http://<host>:6868` -> add root paths, download clients and the apps, then add the uplink `https://github.com/Dictionarry-Hub/trash-pcd/tree/german`.
 
 ## Download Client Settings
 
@@ -108,7 +114,7 @@ Check Radarr/Sonarr -> Activity -> Queue. The orange icon shows the reason, incl
 ## Fix: Imported Files Don't Show Up In Jellyfin
 
 1. Enable real time monitoring on both libraries: Dashboard -> Libraries -> edit -> Enable real time monitoring.
-2. Confirm the library folder is `/media/movies_german` and `/media/shows_german`, not `/media`.
+2. Confirm the library folder is `/media/movies_german`, `/media/anime_movies_german`, `/media/shows_german` and `/media/anime_shows_german`, not `/media`.
 3. Manual scan: Dashboard -> Scan All Libraries.
 4. Naming comes from Radarr/Sonarr renaming. Keep rename enabled in both.
 
