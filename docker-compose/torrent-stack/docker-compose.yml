@@ -105,6 +105,7 @@ services:
       - ../../storage/torrent-stack/radarr/config:/config
       - /hdd-1-4tb/downloads:/downloads
       - /hdd-1-4tb/jellyfin/media/movies_german:/movies
+      - /hdd-1-4tb/jellyfin/media/anime_movies_german:/animes
     depends_on:
       - gluetun
     environment:
@@ -121,6 +122,7 @@ services:
       - ../../storage/torrent-stack/sonarr/config:/config
       - /hdd-1-4tb/downloads:/downloads
       - /hdd-1-4tb/jellyfin/media/shows_german:/tv
+      - /hdd-1-4tb/jellyfin/media/anime_shows_german:/anime
     depends_on:
       - gluetun
     environment:
