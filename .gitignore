@@ -1,10 +1,11 @@
 # Secrets, Tokens, etc.
 .env
+*.secret
 wg0.conf
-./secrets/
-letsencrypt/
 privatekey
 publickey
+./secrets/
+letsencrypt/
 
 # Generic Docker App Data
 cache/
