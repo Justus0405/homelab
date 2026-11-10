@@ -3,6 +3,8 @@
 wg0.conf
 ./secrets/
 letsencrypt/
+privatekey
+publickey
 
 # Generic Docker App Data
 cache/
