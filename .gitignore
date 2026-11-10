@@ -1,5 +1,6 @@
 # Secrets, Tokens, etc.
 .env
+wg0.conf
 ./secrets/
 letsencrypt/
 
@@ -8,6 +9,7 @@ cache/
 config/
 data/
 other/
+logs/
 
 # MakeMKV Output
 output/

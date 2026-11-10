@@ -1,0 +1,24 @@
+services:
+  homelab-proxy:
+    container_name: "homelab-proxy"
+    network_mode: "host"
+    restart: "unless-stopped"
+    build: .
+    volumes:
+      - ./wg0.conf:/etc/wireguard/wg0.conf:ro
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    stop_grace_period: 20s
+    logging:
+      driver: journald
+      options:
+        tag: homelab-proxy
+    healthcheck:
+      test: ["CMD", "ping", "-c", "1", "-W", "3", "10.0.0.1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
