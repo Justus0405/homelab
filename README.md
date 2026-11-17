@@ -76,6 +76,7 @@ Each directory contains a `docker-compose.yml` (and any related notes & .env) fo
 | [open-webui](https://github.com/open-webui/open-webui)                          | Self-hosted AI Chat                               |
 | [searxng](https://github.com/searxng/searxng)                                   | Self-hosted Search Engine                         |
 | [torrent-stack](https://github.com/qdm12/gluetun)                               | Torrent client and related services               |
+| [tuwunel](https://github.com/matrix-construct/tuwunel)                          | Self-hosted Matrix server                         |
 | [uptime-kuma](https://github.com/louislam/uptime-kuma)                          | Uptime monitoring and status pages                |
 | [whoami](https://github.com/traefik/whoami)                                     | Server that prints os and HTTP information        |
 | [vaultwarden](https://github.com/dani-garcia/vaultwarden)                       | Lightweight Bitwarden-compatible password manager |
